@@ -47,7 +47,7 @@ export const markAsDoneAndUnDone = async (req, res) => {
         const modifiedTodo = await Todo.findByIdAndUpdate(id, { $set: { completed: !currentStauts } });
         await modifiedTodo.save();
 
-        res.status(200).json({ message: `Marked as Completed(${modifiedTodo.completed})` });
+        res.status(200).json({ message: `Marked as Completed(${!modifiedTodo.completed})` });
     } catch (error) {
         console.log(`Error in markAsDoneAndUnDone: ${error}`)
         res.status(500).json({ error: error.message });
@@ -187,7 +187,7 @@ export const EditTodo = async (req, res) => {
             return res.status(500).json({ message: "You are not authorized to modify" });
         }
         if (!deadline && !title && !text) {
-            return res.status(200).json({ message: "Not changes made" });
+            return res.status(200).json({ message: "No changes made" });
         }
 
         todo.deadline = deadline || todo.deadline
